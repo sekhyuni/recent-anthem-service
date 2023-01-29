@@ -1,5 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
+
+import index from './routes/index';
 
 const app = express();
 
@@ -13,14 +16,37 @@ app.use(cors(options));
 // JSON Request Body Parsing
 app.use(express.json());
 
-app.listen('8081', () => {
-  console.log(`
-  ################################################
-  🛡️  Server listening on port: 8081🛡️
-  ################################################
-`);
-});
+// MongoDB Connection
+const NODE_PORT: number = 8081;
+const MONGODB_URL: string = 'mongodb://localhost:27017/recent-anthem';
+const connection = mongoose.connect(MONGODB_URL);
+connection
+  .then(() => {
+    app.listen(NODE_PORT, () => {
+      console.log(`Server started at http://localhost:${NODE_PORT}`);
+    });
+  })
+  .catch((error: Error) => {
+    console.error('Database connection failed', error);
+    process.exit();
+  });
 
-app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
-  res.send('welcome!');
-});
+app.use('/', index);
+
+// catch 404 and forward to error handler
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   const err = new Error('Not Found');
+//   err['status'] = 404;
+//   next(err);
+// });
+
+// error handler
+// app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+//   // render the error page
+//   res.status(err['status'] || 500);
+//   res.render('error');
+// });

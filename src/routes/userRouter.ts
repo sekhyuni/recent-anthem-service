@@ -28,7 +28,6 @@ const UserRouter = {
     const { userId } = req.params;
     UserController.readUser(userId)
       .then((user) => {
-        console.log(typeof user);
         res.status(200).json({ result: user });
       })
       .catch((err) => {

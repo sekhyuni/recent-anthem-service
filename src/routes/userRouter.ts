@@ -9,12 +9,12 @@ const UserRouter = {
     const newUser = new UserModel({ userId, password });
     UserController.createUser(newUser)
       .then(() => {
-        res.status(200).json({ result: 'success' });
+        res.status(200).json({ data: 'success' });
       })
       .catch((err) => {
         if (err.code === 11000 && err.keyValue.hasOwnProperty('userId')) {
           res.status(500).json({
-            result: {
+            data: {
               isDuplicated: true,
               errmsg: '이미 존재하는 아이디입니다.',
             },
@@ -28,7 +28,7 @@ const UserRouter = {
     const { userId } = req.params;
     UserController.readUser(userId)
       .then((user) => {
-        res.status(200).json({ result: user });
+        res.status(200).json({ data: user });
       })
       .catch((err) => {
         console.log(err);
@@ -40,7 +40,7 @@ const UserRouter = {
     const user = req.body;
     UserController.updateUser(userId, user)
       .then((user: UpdateWriteOpResult) => {
-        res.status(200).json({ result: user });
+        res.status(200).json({ data: user });
       })
       .catch((err) => {
         res.status(500).json({ errmsg: err.errmsg });
@@ -50,7 +50,7 @@ const UserRouter = {
     const { userId } = req.params;
     UserController.deleteUser(userId)
       .then((user: IUser) => {
-        res.status(200).json({ result: user });
+        res.status(200).json({ data: user });
       })
       .catch((err) => {
         res.status(500).json({ errmsg: err.errmsg });

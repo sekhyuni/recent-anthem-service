@@ -8,7 +8,7 @@ export default class MusicService {
   }
 
   static readMusic(title: string) {
-    return MusicModel.find({ title: new RegExp(title) });
+    return MusicModel.find({ title: new RegExp(title, 'i') });
   }
 
   // static updateMusic(title: string, music: IMusic) {

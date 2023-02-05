@@ -32,19 +32,23 @@ const MusicRouter = {
     }
   },
   async read(req: Request, res: Response) {
-    const { title, page, limit } = req.query;
+    const { filter, keyword, page, limit } = req.query;
 
     try {
-      const musics = await MusicController.read(
-        String(title),
+      const listOfMusic = await MusicController.read(
+        String(filter),
+        String(keyword),
         Number(page),
         Number(limit)
       );
-      const count = await MusicController.readCount(String(title));
+      const count = await MusicController.readCount(
+        String(filter),
+        String(keyword)
+      );
 
       res
         .status(200)
-        .json({ meta: { count, message: 'success' }, data: musics });
+        .json({ meta: { count, message: 'success' }, data: listOfMusic });
     } catch (error: unknown) {
       res.status(500).json({ meta: { message: error } });
     }

@@ -7,15 +7,15 @@ export default class MusicService {
     return new MusicModel(music).save();
   }
 
-  static read(title: string, page: number, limit: number) {
-    return MusicModel.find({ title: new RegExp(title, 'i') })
+  static read(filter: string, keyword: string, page: number, limit: number) {
+    return MusicModel.find({ [filter]: new RegExp(keyword, 'i') })
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();
   }
 
-  static readCount(title: string) {
-    return MusicModel.countDocuments({ title: new RegExp(title, 'i') });
+  static readCount(filter: string, keyword: string) {
+    return MusicModel.countDocuments({ [filter]: new RegExp(keyword, 'i') });
   }
 
   // static update(title: string, music: IMusic) {

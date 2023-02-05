@@ -8,12 +8,12 @@ export default class MusicController {
     return MusicService.create(music);
   }
 
-  static read(title: string, page: number, limit: number) {
-    return MusicService.read(title, page, limit);
+  static read(filter: string, keyword: string, page: number, limit: number) {
+    return MusicService.read(filter, keyword, page, limit);
   }
 
-  static readCount(title: string) {
-    return MusicService.readCount(title);
+  static readCount(filter: string, keyword: string) {
+    return MusicService.readCount(filter, keyword);
   }
 
   // static update(title: string, music: IMusic) {

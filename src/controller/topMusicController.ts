@@ -3,11 +3,11 @@ import TopMusicService from '../services/topMusicService';
 export default class TopMusicController {
   constructor() {}
 
-  static read(title: string, page: number, limit: number) {
-    return TopMusicService.read(title, page, limit);
+  static read(filter: string, keyword: string, page: number, limit: number) {
+    return TopMusicService.read(filter, keyword, page, limit);
   }
 
-  static readCount(title: string) {
-    return TopMusicService.readCount(title);
+  static readCount(filter: string, keyword: string) {
+    return TopMusicService.readCount(filter, keyword);
   }
 }

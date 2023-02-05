@@ -4,38 +4,50 @@ import { IMusic, MusicModel } from '../services/dbModel';
 import MusicController from '../controller/musicController';
 
 const MusicRouter = {
-  create(req: Request, res: Response) {
+  async create(req: Request, res: Response) {
     const { title, artist, album } = req.body;
     const newMusic = new MusicModel({ title, artist, album });
-    MusicController.createMusic(newMusic)
-      .then(() => {
-        res.status(200).json({ data: 'success' });
-      })
-      .catch((err) => {
-        if (err.code === 11000) {
-          console.log(err);
-          res.status(500).json({ errmsg: err });
 
-          // res.status(500).json({
-          //   data: {
-          //     isDuplicated: true,
-          //     errmsg: '이미 존재하는 곡입니다.',
-          //   },
-          // });
-        } else {
-          res.status(500).json({ errmsg: err });
-        }
+    try {
+      const response = await MusicController.createMusic(newMusic);
+      res.status(200).json({
+        meta: {
+          message: `A Music Of Title ${response.title} is inserted successfully`,
+        },
       });
+    } catch (error: unknown) {
+      const err = error as { code: number; message: string };
+      if (err.code === 11000) {
+        res.status(500).json({ meta: { message: err.message } });
+
+        // res.status(500).json({
+        //   data: {
+        //     isDuplicated: true,
+        //     errmsg: '이미 존재하는 곡입니다.',
+        //   },
+        // });
+      } else {
+        res.status(500).json({ meta: { message: err.message } });
+      }
+    }
   },
-  read(req: Request, res: Response) {
-    const { query } = req;
-    MusicController.readMusic(query.title as string)
-      .then((music) => {
-        res.status(200).json({ data: music });
-      })
-      .catch((err) => {
-        res.status(500).json({ errmsg: err.errmsg });
-      });
+  async read(req: Request, res: Response) {
+    const { title, page, limit } = req.query;
+
+    try {
+      const musics = await MusicController.readMusic(
+        String(title),
+        Number(page),
+        Number(limit)
+      );
+      const count = await MusicController.readMusicCount(String(title));
+
+      res
+        .status(200)
+        .json({ meta: { count, message: 'success' }, data: musics });
+    } catch (error: unknown) {
+      res.status(500).json({ meta: { message: error } });
+    }
   },
   // update(req: Request, res: Response) {
   //   const { title } = req.params;

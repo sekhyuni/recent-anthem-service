@@ -23,6 +23,7 @@ export interface IMusic extends Document {
   title: string;
   artist: string;
   album: string;
+  likeCount: number;
 }
 const MusicSchema: Schema = new Schema({
   title: {
@@ -43,3 +44,33 @@ const MusicSchema: Schema = new Schema({
   },
 });
 export const MusicModel: Model<IMusic> = model<IMusic>('Music', MusicSchema);
+
+// Top Music Schema
+export interface ITopMusic extends Document {
+  rank: number;
+  title: string;
+  artist: string;
+  album: string;
+}
+const TopMusicSchema: Schema = new Schema({
+  rank: {
+    type: Number,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  artist: {
+    type: String,
+    required: true,
+  },
+  album: {
+    type: String,
+    required: true,
+  },
+});
+export const TopMusicModel: Model<ITopMusic> = model<ITopMusic>(
+  'top.common.musics',
+  TopMusicSchema
+);

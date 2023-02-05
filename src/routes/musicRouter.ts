@@ -9,7 +9,7 @@ const MusicRouter = {
     const newMusic = new MusicModel({ title, artist, album });
 
     try {
-      const response = await MusicController.createMusic(newMusic);
+      const response = await MusicController.create(newMusic);
       res.status(200).json({
         meta: {
           message: `A Music Of Title ${response.title} is inserted successfully`,
@@ -35,12 +35,12 @@ const MusicRouter = {
     const { title, page, limit } = req.query;
 
     try {
-      const musics = await MusicController.readMusic(
+      const musics = await MusicController.read(
         String(title),
         Number(page),
         Number(limit)
       );
-      const count = await MusicController.readMusicCount(String(title));
+      const count = await MusicController.readCount(String(title));
 
       res
         .status(200)
@@ -52,7 +52,7 @@ const MusicRouter = {
   // update(req: Request, res: Response) {
   //   const { title } = req.params;
   //   const music = req.body;
-  //   MusicController.updateMusic(title, music)
+  //   MusicController.update(title, music)
   //     .then((music: UpdateWriteOpResult) => {
   //       res.status(200).json({ data: music });
   //     })
@@ -62,7 +62,7 @@ const MusicRouter = {
   // },
   // delete(req: Request, res: Response) {
   //   const { title } = req.params;
-  //   MusicController.deleteMusic(title)
+  //   MusicController.delete(title)
   //     .then((music: IMusic) => {
   //       res.status(200).json({ data: music });
   //     })

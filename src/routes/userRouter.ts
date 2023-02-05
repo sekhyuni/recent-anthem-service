@@ -7,7 +7,7 @@ const UserRouter = {
   create(req: Request, res: Response) {
     const { userId, password } = req.body;
     const newUser = new UserModel({ userId, password });
-    UserController.createUser(newUser)
+    UserController.create(newUser)
       .then(() => {
         res.status(200).json({ data: 'success' });
       })
@@ -26,7 +26,7 @@ const UserRouter = {
   },
   read(req: Request, res: Response) {
     const { userId } = req.params;
-    UserController.readUser(userId)
+    UserController.read(userId)
       .then((user) => {
         res.status(200).json({ data: user });
       })
@@ -38,7 +38,7 @@ const UserRouter = {
   update(req: Request, res: Response) {
     const { userId } = req.params;
     const user = req.body;
-    UserController.updateUser(userId, user)
+    UserController.update(userId, user)
       .then((user: UpdateWriteOpResult) => {
         res.status(200).json({ data: user });
       })
@@ -48,7 +48,7 @@ const UserRouter = {
   },
   delete(req: Request, res: Response) {
     const { userId } = req.params;
-    UserController.deleteUser(userId)
+    UserController.delete(userId)
       .then((user: IUser) => {
         res.status(200).json({ data: user });
       })

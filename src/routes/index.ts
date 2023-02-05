@@ -3,6 +3,7 @@ import express from 'express';
 import MainRouter from './mainRouter';
 import UserRouter from './userRouter';
 import MusicRouter from './musicRouter';
+import TopMusicRouter from './topMusicRouter';
 
 const router = express.Router();
 
@@ -19,5 +20,8 @@ router.post('/music', MusicRouter.create);
 router.get('/music', MusicRouter.read);
 // router.put('/music/:title', MusicRouter.update);
 // router.delete('/music/:title', MusicRouter.delete);
+
+// Top Music Read Logic
+router.get('/music/top', TopMusicRouter.read);
 
 export default router;

@@ -4,19 +4,19 @@ import UserService from '../services/userService';
 export default class UserController {
   constructor() {}
 
-  static createUser(user: IUser) {
-    return UserService.createUser(user);
+  static create(user: IUser) {
+    return UserService.create(user);
   }
 
-  static readUser(userId: string) {
-    return UserService.readUser(userId);
+  static read(userId: string) {
+    return UserService.read(userId);
   }
 
-  static updateUser(userId: string, user: IUser) {
-    return UserService.updateUser(userId, user);
+  static update(userId: string, user: IUser) {
+    return UserService.update(userId, user);
   }
 
-  static deleteUser(userId: string) {
-    return UserService.deleteUser(userId);
+  static delete(userId: string) {
+    return UserService.delete(userId);
   }
 }

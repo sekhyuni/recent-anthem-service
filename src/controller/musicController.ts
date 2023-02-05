@@ -4,23 +4,23 @@ import MusicService from '../services/musicService';
 export default class MusicController {
   constructor() {}
 
-  static createMusic(music: IMusic) {
-    return MusicService.createMusic(music);
+  static create(music: IMusic) {
+    return MusicService.create(music);
   }
 
-  static readMusic(title: string, page: number, limit: number) {
-    return MusicService.readMusic(title, page, limit);
+  static read(title: string, page: number, limit: number) {
+    return MusicService.read(title, page, limit);
   }
 
-  static readMusicCount(title: string) {
-    return MusicService.readMusicCount(title);
+  static readCount(title: string) {
+    return MusicService.readCount(title);
   }
 
-  // static updateMusic(title: string, music: IMusic) {
-  //   return MusicService.updateMusic(title, music);
+  // static update(title: string, music: IMusic) {
+  //   return MusicService.update(title, music);
   // }
 
-  // static deleteMusic(title: string) {
-  //   return MusicService.deleteMusic(title);
+  // static delete(title: string) {
+  //   return MusicService.delete(title);
   // }
 }

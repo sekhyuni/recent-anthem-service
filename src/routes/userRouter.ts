@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UpdateWriteOpResult } from 'mongoose';
+
 import { IUser, UserModel } from '../services/dbModel';
 import UserController from '../controller/userController';
 

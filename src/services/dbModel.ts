@@ -51,6 +51,7 @@ export interface ITopMusic extends Document {
   title: string;
   artist: string;
   album: string;
+  crawling_time: string;
 }
 const TopMusicSchema: Schema = new Schema({
   rank: {
@@ -66,6 +67,10 @@ const TopMusicSchema: Schema = new Schema({
     required: true,
   },
   album: {
+    type: String,
+    required: true,
+  },
+  crawling_time: {
     type: String,
     required: true,
   },

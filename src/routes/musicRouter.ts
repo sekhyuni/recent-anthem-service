@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UpdateWriteOpResult } from 'mongoose';
+
 import { IMusic, MusicModel } from '../services/dbModel';
 import MusicController from '../controller/musicController';
 
@@ -17,40 +18,28 @@ const MusicRouter = {
       });
     } catch (error: unknown) {
       const err = error as { code: number; message: string };
-      if (err.code === 11000) {
-        res.status(500).json({ meta: { message: err.message } });
-
-        // res.status(500).json({
-        //   data: {
-        //     isDuplicated: true,
-        //     errmsg: '이미 존재하는 곡입니다.',
-        //   },
-        // });
-      } else {
-        res.status(500).json({ meta: { message: err.message } });
-      }
+      res.status(500).json({ meta: { message: err.message } });
     }
   },
   async read(req: Request, res: Response) {
     const { filter, keyword, page, limit } = req.query;
 
     try {
-      const listOfMusic = await MusicController.read(
-        String(filter),
-        String(keyword),
-        Number(page),
-        Number(limit)
-      );
-      const count = await MusicController.readCount(
-        String(filter),
-        String(keyword)
-      );
+      const [listOfMusic, count] = await Promise.all([
+        MusicController.read(
+          String(filter),
+          String(keyword),
+          Number(page),
+          Number(limit)
+        ),
+        MusicController.readCount(String(filter), String(keyword)),
+      ]);
 
       res
         .status(200)
         .json({ meta: { count, message: 'success' }, data: listOfMusic });
     } catch (error: unknown) {
-      res.status(500).json({ meta: { message: error } });
+      res.status(500).json({ meta: { count: 0, message: error }, data: [] });
     }
   },
   // update(req: Request, res: Response) {

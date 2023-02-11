@@ -26,11 +26,16 @@ const TopMusicRouter = {
       let [listOfTopMusic, count] = await fetchListOfTopMusic(
         format(currentTime, 'yyyyMMddHH')
       );
-      if (count === 0) {
+
+      let hourIdx = 0;
+      while (count === 0 && hourIdx < 10) {
+        hourIdx++;
+
         [listOfTopMusic, count] = await fetchListOfTopMusic(
-          format(currentTime - 60 * 60 * 1000, 'yyyyMMddHH')
+          format(currentTime - hourIdx * 60 * 60 * 1000, 'yyyyMMddHH')
         );
       }
+
       if (count === 0) {
         res.status(500).json({
           meta: { count, message: '실시간 데이터가 존재하지 않습니다.' },

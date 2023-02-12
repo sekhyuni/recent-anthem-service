@@ -18,7 +18,8 @@ app.use(express.json());
 
 // MongoDB Connection
 const NODE_PORT: number = 8081;
-const MONGODB_URL: string = 'mongodb://localhost:27017/recent-anthem';
+const { MONGODB_USERNAME, MONGODB_PASSWORD } = process.env;
+const MONGODB_URL: string = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@recentanthem.xqvhmwa.mongodb.net/recent-anthem`;
 const connection = mongoose.connect(MONGODB_URL);
 connection
   .then(() => {

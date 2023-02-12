@@ -27,12 +27,12 @@ const MusicRouter = {
     try {
       const [listOfMusic, count] = await Promise.all([
         MusicController.read(
-          String(filter),
-          String(keyword),
+          filter as string,
+          keyword as string,
           Number(page),
           Number(limit)
         ),
-        MusicController.readCount(String(filter), String(keyword)),
+        MusicController.readCount(filter as string, keyword as string),
       ]);
 
       res
